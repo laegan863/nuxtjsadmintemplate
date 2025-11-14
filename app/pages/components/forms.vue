@@ -48,6 +48,9 @@ const statuses = [
 
 <template>
   <div class="space-y-6">
+    <!-- Breadcrumbs -->
+    <Breadcrumbs />
+    
     <!-- Page Header -->
     <div>
       <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Form Components</h1>

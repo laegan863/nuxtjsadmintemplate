@@ -50,7 +50,9 @@ const sidebarHovered = ref(false)
       
       <!-- Page content -->
       <main class="py-8 bg-gray-100 dark:bg-gray-900 min-h-screen transition-colors duration-200">
+        
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
+          
           <Transition
             mode="out-in"
             enter-active-class="transition-all duration-300 ease-out"

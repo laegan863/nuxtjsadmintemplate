@@ -50,7 +50,7 @@ const stats = [
         Welcome back! Here's what's happening today.
       </p>
     </div>
-
+    <Alert class="mb-3" variant="danger" title="Error Message" dismissible="true" message="Welcome to the dashboard!"/>
     <!-- Stats grid -->
     <div class="mb-8">
       <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">

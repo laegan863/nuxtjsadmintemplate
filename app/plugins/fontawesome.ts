@@ -37,7 +37,8 @@ import {
   faTable,
   faWindowRestore,
   faPen,
-  faPlusCircle
+  faPlusCircle,
+  faSpinner
 } from '@fortawesome/free-solid-svg-icons'
 
 // This is important, we are going to let Nuxt worry about the CSS
@@ -81,7 +82,8 @@ library.add(
   faTable,
   faWindowRestore,
   faPen,
-  faPlusCircle
+  faPlusCircle,
+  faSpinner
 )
 
 export default defineNuxtPlugin((nuxtApp) => {
