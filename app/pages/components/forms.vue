@@ -26,6 +26,7 @@ const fileInput = ref('')
 // Select inputs
 const selectedCountry = ref('')
 const selectedStatus = ref('')
+const selectedCity = ref('')
 
 const countries = [
   { value: 'us', label: 'United States' },
@@ -35,6 +36,32 @@ const countries = [
   { value: 'de', label: 'Germany' },
   { value: 'fr', label: 'France' },
   { value: 'jp', label: 'Japan' },
+  { value: 'cn', label: 'China' },
+  { value: 'in', label: 'India' },
+  { value: 'br', label: 'Brazil' },
+  { value: 'mx', label: 'Mexico' },
+  { value: 'es', label: 'Spain' },
+  { value: 'it', label: 'Italy' },
+  { value: 'nl', label: 'Netherlands' },
+  { value: 'se', label: 'Sweden' },
+]
+
+const cities = [
+  { value: 'nyc', label: 'New York City' },
+  { value: 'la', label: 'Los Angeles' },
+  { value: 'chicago', label: 'Chicago' },
+  { value: 'houston', label: 'Houston' },
+  { value: 'phoenix', label: 'Phoenix' },
+  { value: 'philadelphia', label: 'Philadelphia' },
+  { value: 'san-antonio', label: 'San Antonio' },
+  { value: 'san-diego', label: 'San Diego' },
+  { value: 'dallas', label: 'Dallas' },
+  { value: 'san-jose', label: 'San Jose' },
+  { value: 'austin', label: 'Austin' },
+  { value: 'jacksonville', label: 'Jacksonville' },
+  { value: 'fort-worth', label: 'Fort Worth' },
+  { value: 'columbus', label: 'Columbus' },
+  { value: 'charlotte', label: 'Charlotte' },
 ]
 
 const statuses = [
@@ -233,17 +260,34 @@ const statuses = [
         <FormSelect
           v-model="selectedCountry"
           :options="countries"
-          label="Country"
+          label="Standard Select"
           placeholder="Select a country..."
-          hint="Choose your country from the list"
+          hint="Basic select without search"
         />
 
         <FormSelect
           v-model="selectedStatus"
           :options="statuses"
-          label="Status"
+          label="Status Select"
           placeholder="Select status..."
           hint="Some options may be disabled"
+        />
+
+        <FormSelect
+          v-model="selectedCity"
+          :options="cities"
+          label="Searchable Select"
+          placeholder="Search and select a city..."
+          :searchable="true"
+          hint="Type to search through options"
+        />
+
+        <FormSelect
+          :options="countries"
+          label="Searchable Countries"
+          placeholder="Search countries..."
+          :searchable="true"
+          hint="Search to filter countries"
         />
       </div>
     </CardContainer>

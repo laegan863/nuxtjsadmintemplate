@@ -7,6 +7,7 @@ export const useUser = () => {
     status: 'online'
   })
 
+
   const isOnline = computed(() => user.value.status === 'online')
 
   return {

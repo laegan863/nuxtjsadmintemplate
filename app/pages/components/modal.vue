@@ -1,13 +1,9 @@
 <script setup lang="ts">
-definePageMeta({
-  layout: 'app'
-})
-
-const showSmallModal = ref(false)
-const showMediumModal = ref(false)
-const showLargeModal = ref(false)
-const showXLModal = ref(false)
-const showPersistentModal = ref(false)
+    const showSmallModal = ref(false)
+    const showMediumModal = ref(false)
+    const showLargeModal = ref(false)
+    const showXLModal = ref(false)
+    const showPersistentModal = ref(false)
 </script>
 
 <template>
@@ -159,6 +155,7 @@ const showPersistentModal = ref(false)
               { value: 'uk', label: 'United Kingdom' },
               { value: 'ca', label: 'Canada' }
             ]"
+            :searchable="true"
           />
         </div>
       </template>
