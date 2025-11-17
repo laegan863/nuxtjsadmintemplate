@@ -1,4 +1,5 @@
 <script setup lang="ts">
+    import Swal from 'sweetalert2'
     import axios from 'axios'
     interface User {
         id: number
@@ -14,7 +15,7 @@
         success: boolean
     }
 
-
+    const deleteLoading = ref(false);
     const loading = ref(true)
     const error = ref<Error | null>(null)
     const users = ref<User[]>([]);
@@ -53,14 +54,57 @@
             alertVariant.value = 'danger';
         } finally {
             loading.value = false;
+            return alert.value;
         }
     }
 
     const handleSelectedValue = (value: string | number, userId: number) => {
-        console.log('Action selected:', value)
         switch (value) {
             case 'delete':
-                deleteUser(userId);
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: "bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg mx-2",
+                        cancelButton: "bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg mx-2"
+                    },
+                    buttonsStyling: false
+                });
+                swalWithBootstrapButtons.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, delete it!",
+                    cancelButtonText: "No, cancel!",
+                    reverseButtons: true
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        deleteLoading.value = true;
+                        let result = await deleteUser(userId);
+                        if(result){
+                            deleteLoading.value = false;
+                            swalWithBootstrapButtons.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                        }else{
+                            deleteLoading.value = false;
+                            swalWithBootstrapButtons.fire({
+                                title: "Error!",
+                                text: "There was an error deleting the user.",
+                                icon: "error"
+                            });
+                        }
+                } else if (
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire({
+                        title: "Cancelled",
+                        text: "Your imaginary file is safe :)",
+                        icon: "error"
+                        });
+                    }
+                });
             break;
             default:
                 console.log(`Action ${value} not implemented yet.`);
