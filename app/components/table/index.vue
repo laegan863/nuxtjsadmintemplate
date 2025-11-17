@@ -29,7 +29,9 @@ const perPage = ref(10)
 
 // Automatic filtering
 const filteredData = computed(() => {
-  let filtered = props.data
+  // Ensure data is an array
+  const dataArray = Array.isArray(props.data) ? props.data : []
+  let filtered = dataArray
 
   // Apply search filter
   if (props.searchable && searchQuery.value) {
@@ -54,10 +56,11 @@ const filteredData = computed(() => {
 
 // Paginated data
 const paginatedData = computed(() => {
-  if (!props.paginated) return filteredData.value
+  const filtered = filteredData.value
+  if (!props.paginated || !Array.isArray(filtered)) return filtered
   
   const start = (currentPage.value - 1) * perPage.value
-  return filteredData.value.slice(start, start + perPage.value)
+  return filtered.slice(start, start + perPage.value)
 })
 
 // Calculate total pages

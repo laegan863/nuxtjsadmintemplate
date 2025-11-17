@@ -84,7 +84,25 @@ const sidebar = [
                 icon: 'circle',
                 link: '/components/forms',
             },
+            {
+                name: 'Dropdowns',
+                icon: 'circle',
+                link: '/components/dropdown',
+            },
         ]
+    },
+    {
+        name: 'Sample',
+        icon: 'gauge',
+        link: '#',
+        children: [
+          {
+            name: 'CRUD Example',
+            icon: 'circle',
+            link: '/samples/crud',
+          }
+        ],
+        isOpen: ref(false)
     },
     {
         name: 'Analytics',

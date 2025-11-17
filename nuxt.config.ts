@@ -7,6 +7,12 @@ export default defineNuxtConfig({
     '~/assets/css/main.css',
     '@fortawesome/fontawesome-svg-core/styles.css'
   ],
+  runtimeConfig: {
+    apiToken: process.env.NUXT_API_TOKEN,
+    public: {
+      apiToken: process.env.NUXT_API_TOKEN
+    }
+  },
   app: {
     head: {
       link: [

@@ -208,7 +208,7 @@
     </Modal>
 
     <!-- Persistent Modal -->
-    <Modal v-model="showPersistentModal" size="md" title="Persistent Modal" :persistent="true">
+    <Modal v-model="showPersistentModal" size="lg" title="Persistent Modal" :persistent="true">
       <template #body>
         <div class="space-y-4">
           <Alert variant="warning" :dismissible="false">

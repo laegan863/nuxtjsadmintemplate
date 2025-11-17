@@ -12,7 +12,6 @@ interface User {
   email: string
 }
 
-// Sample data
 const users: User[] = [
   { id: 1, name: 'John Doe', age: 28, city: 'New York', status: 'Active', email: 'john@example.com' },
   { id: 2, name: 'Jane Smith', age: 34, city: 'Los Angeles', status: 'Active', email: 'jane@example.com' },
