@@ -11,7 +11,7 @@ const sidebar = [
     {
         name: 'Dashboard',
         icon: 'house',
-        link: '/',
+        link: '/admin/',
         children: [],
         isOpen: ref(false)
     },
@@ -24,27 +24,27 @@ const sidebar = [
             {
                 name: 'Profile',
                 icon: 'circle',
-                link: '/profile',
+                link: '/admin/profile',
             },
             {
                 name: 'Projects',
                 icon: 'circle',
-                link: '/projects',
+                link: '/admin/projects',
             },
             {
                 name: 'Calendar',
                 icon: 'circle',
-                link: '/calendar',
+                link: '/admin/calendar',
             },
             {
                 name: 'Documents',
                 icon: 'circle',
-                link: '/documents',
+                link: '/admin/documents',
             },
             {
                 name: 'Reports',
                 icon: 'circle',
-                link: '/reports',
+                link: '/admin/reports',
             },
         ]
     },
@@ -57,37 +57,37 @@ const sidebar = [
             {
                 name: 'Alerts',
                 icon: 'circle',
-                link: '/components/alert',
+                link: '/admin/components/alert',
             },
             {
                 name: 'Buttons',
                 icon: 'circle',
-                link: '/components/buttons',
+                link: '/admin/components/buttons',
             },
             {
                 name: 'Cards',
                 icon: 'circle',
-                link: '/components/cards',
+                link: '/admin/components/cards',
             },
             {
                 name: 'Tables',
                 icon: 'circle',
-                link: '/components/tables',
+                link: '/admin/components/tables',
             },
             {
                 name: 'Modals',
                 icon: 'circle',
-                link: '/components/modal',
+                link: '/admin/components/modal',
             },
             {
                 name: 'Forms',
                 icon: 'circle',
-                link: '/components/forms',
+                link: '/admin/components/forms',
             },
             {
                 name: 'Dropdowns',
                 icon: 'circle',
-                link: '/components/dropdown',
+                link: '/admin/components/dropdown',
             },
         ]
     },
@@ -99,7 +99,7 @@ const sidebar = [
           {
             name: 'CRUD Example',
             icon: 'circle',
-            link: '/samples/crud',
+            link: '/admin/samples/crud',
           }
         ],
         isOpen: ref(false)
@@ -107,21 +107,21 @@ const sidebar = [
     {
         name: 'Analytics',
         icon: 'gauge',
-        link: '/analytics',
+        link: '/admin/analytics',
         children: [],
         isOpen: ref(false)
     },
     {
         name: 'Reports',
         icon: 'folder',
-        link: '/reports',
+        link: '/admin/reports',
         children: [],
         isOpen: ref(false)
     },
     {
         name: 'Settings',
         icon: 'gear',
-        link: '/settings',
+        link: '/admin/settings',
         children: [],
         isOpen: ref(false)
     },

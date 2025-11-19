@@ -1,6 +1,6 @@
 <script setup lang="ts">
 interface Props {
-  variant?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'none'
+  variant?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'none' | 'light'
   size?: 'small' | 'medium' | 'large'
   disabled?: boolean
   loading?: boolean
@@ -26,6 +26,7 @@ const variantClasses = computed(() => {
     warning: 'bg-yellow-500 text-white hover:bg-yellow-600 focus:ring-yellow-400 dark:bg-yellow-400 dark:hover:bg-yellow-500',
     info: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600',
     none: 'bg-transparent',
+    light: 'bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600',
   }
 
   const sizes = {

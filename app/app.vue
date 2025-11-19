@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const route = useRoute()
 
-const layoutName = computed<'index' | 'app'>(() => {
-  return route.path === '/login' ? 'index' : 'app'
+const layoutName = computed<'app' | 'index'>(() => {
+  return route.path.startsWith('/admin/') ? 'app' : 'index'
 })
 </script>
 
