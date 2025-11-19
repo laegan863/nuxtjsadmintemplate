@@ -10,7 +10,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     apiToken: process.env.NUXT_API_TOKEN,
     public: {
-      apiToken: process.env.NUXT_API_TOKEN
+      apiToken: process.env.NUXT_API_TOKEN,
+      baseURL: process.env.NUXT_API_URL,
     }
   },
   app: {

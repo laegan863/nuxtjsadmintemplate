@@ -192,6 +192,30 @@
                 <div class="text-sm text-gray-600 dark:text-gray-400">Inactive</div>
               </div>
             </CardContainer>
+            <CardContainer :padding="false" class="p-4">
+              <div class="text-center">
+                <div class="text-3xl font-bold text-red-600 dark:text-red-400">25</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">Inactive</div>
+              </div>
+            </CardContainer>
+            <CardContainer :padding="false" class="p-4">
+              <div class="text-center">
+                <div class="text-3xl font-bold text-red-600 dark:text-red-400">25</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">Inactive</div>
+              </div>
+            </CardContainer>
+            <CardContainer :padding="false" class="p-4">
+              <div class="text-center">
+                <div class="text-3xl font-bold text-red-600 dark:text-red-400">25</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">Inactive</div>
+              </div>
+            </CardContainer>
+            <CardContainer :padding="false" class="p-4">
+              <div class="text-center">
+                <div class="text-3xl font-bold text-red-600 dark:text-red-400">25</div>
+                <div class="text-sm text-gray-600 dark:text-gray-400">Inactive</div>
+              </div>
+            </CardContainer>
           </div>
 
           <div class="grid grid-cols-2 gap-4">

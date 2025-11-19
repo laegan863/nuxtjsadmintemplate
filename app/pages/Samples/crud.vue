@@ -1,11 +1,14 @@
 <script setup lang="ts">
-    import Swal from 'sweetalert2'
     import axios from 'axios'
+    import Swal from 'sweetalert2'
+
+    const config = useRuntimeConfig();
     interface User {
         id: number
         name: string
         email: string
         email_verified_at: string | null
+        remember_token: string | null
         created_at: string
         updated_at: string
     }
@@ -14,97 +17,37 @@
         data: User[]
         success: boolean
     }
-
-    const deleteLoading = ref(false);
+    
+    
     const loading = ref(true)
     const error = ref<Error | null>(null)
     const users = ref<User[]>([]);
     const alert = ref(false);
     const alertMessage = ref('');
     const alertVariant = ref('success');
+    const deleteModal = ref(false);
+    const deleteID = ref<number | null>(null);
 
     onMounted(() => {
         setTimeout(async() => {
-            users.value = (await $fetch<ApiResponse>('/api/hello')).data;
-            loading.value = false;
-        }, 100);
-    });
-
-    const deleteUser = async(userId: number) => {
-        try {
-            const response = await axios.delete(`http://localhost:8000/api/delete`,{
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Authorization': `Bearer 4Ah-kTd7gR71RTZgtecIJrFS2ahlv3Aj2ZzCvc56zQJm2ni9lTfECvwMOpk9EglCysDNq53PsfznojADNjv0PpGpyEzO2q9WQYlUu87XncPeow8kSAx3lgQn6pkAM3I4BNtNF9iuMhp1-vBaIHNbG55-1V5pk7V4X5TLy772XPHIJy6fMm8hTm3dAqQp6LezQfSrTh2xuAp1PW9Hq7ktqP4XYrPuh5tn0q4cqsLkHNEwEObrjnbXMn6gsatb1rFcJGZWMVSY08VcSghs8rxQOMJ7UjVZE93MWx4DzWvgk-hXF7XYwpuz9wadyzbEyM5aH_cT7Qv4Ulc7NF3ETXtDGw`
-                },
-                data: { id: userId }
-            });
-            users.value = users.value.filter(user => user.id !== userId);
-
-            if(response.status !== 200) {
-                throw new Error('Failed to delete user');
+            try {
+                users.value = (await $fetch<ApiResponse>('/api/hello')).data;
+                console.log("data", users.value);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            } finally {
+                loading.value = false;
             }
+        }, 100);
 
-            alert.value = true;
-            alertMessage.value = 'User deleted successfully';
-        } catch (err) {
-            alert.value = true;
-            alertMessage.value = 'Failed to delete user';
-            alertVariant.value = 'danger';
-        } finally {
-            loading.value = false;
-            return alert.value;
-        }
-    }
+        console.log(loading.value);
+    });
 
     const handleSelectedValue = (value: string | number, userId: number) => {
         switch (value) {
             case 'delete':
-                const swalWithBootstrapButtons = Swal.mixin({
-                    customClass: {
-                        confirmButton: "bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg mx-2",
-                        cancelButton: "bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg mx-2"
-                    },
-                    buttonsStyling: false
-                });
-                swalWithBootstrapButtons.fire({
-                    title: "Are you sure?",
-                    text: "You won't be able to revert this!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Yes, delete it!",
-                    cancelButtonText: "No, cancel!",
-                    reverseButtons: true
-                }).then(async (result) => {
-                    if (result.isConfirmed) {
-                        deleteLoading.value = true;
-                        let result = await deleteUser(userId);
-                        if(result){
-                            deleteLoading.value = false;
-                            swalWithBootstrapButtons.fire({
-                                title: "Deleted!",
-                                text: "Your file has been deleted.",
-                                icon: "success"
-                            });
-                        }else{
-                            deleteLoading.value = false;
-                            swalWithBootstrapButtons.fire({
-                                title: "Error!",
-                                text: "There was an error deleting the user.",
-                                icon: "error"
-                            });
-                        }
-                } else if (
-                    result.dismiss === Swal.DismissReason.cancel
-                ) {
-                    swalWithBootstrapButtons.fire({
-                        title: "Cancelled",
-                        text: "Your imaginary file is safe :)",
-                        icon: "error"
-                        });
-                    }
-                });
+                deleteModal.value = true;
+                deleteID.value = userId;
             break;
             default:
                 console.log(`Action ${value} not implemented yet.`);
@@ -112,6 +55,35 @@
         }
     }
 
+    const handleDeleteItem = async () => {
+        try {
+            deleteModal.value = false;
+            useDeleteLoading("Deleting...", "Please wait while we delete this user.");
+            const response = await axios.delete(`${config.public.baseURL}/delete`,{
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${config.public.apiToken || config.apiToken}`
+                },
+                data: { id: deleteID.value }
+            });
+            
+            if(response.status !== 200) {
+                throw new Error('Failed to delete user');
+            }
+            console.log("response", response.data);
+            alertMessage.value = 'User deleted successfully.';
+            alertVariant.value = 'success';
+            alert.value = true;
+            users.value = users.value.filter(user => user.id !== deleteID.value);
+        } catch (error) {
+            alertMessage.value = (error as Error).message || 'An error occurred while deleting the user.';
+            alertVariant.value = 'danger';
+            alert.value = true;
+        } finally {
+            Swal.close();
+        } 
+    }
 </script>
 <template>
     <div class="space-y-6">
@@ -122,12 +94,26 @@
                 Manage users with search, filter, and pagination.
             </p>
         </div>
-
+        
         <div class="my-2" v-if="alert">
             <Alert :dismissible="true" @dismiss="alert = false" variant="success">
                 {{ alertMessage }}
             </Alert>
         </div>
+        <Modal v-model="deleteModal" size="lg" title="Delete User">
+            <template #body>
+                <p class="text-gray-600 dark:text-gray-400">
+                    Do you want to delete this user?
+                </p>
+            </template>
+            <template #footer="{ close }">
+                <Button variant="secondary" @click="close">Cancel</Button>
+                <Button variant="danger" @click="handleDeleteItem">Delete</Button>
+            </template>
+        </Modal>
+        <Button variant="primary" class="mb-4" @click="$router.push('/samples/add-user')">
+            <font-awesome-icon icon="plus"/> Add User
+        </Button>
         <CardContainer>
             <Alert v-if="error" variant="danger" :dismissible="false">
                 Failed to load users: {{ error.message }}
@@ -140,9 +126,9 @@
                 <p class="text-gray-500 dark:text-gray-400">No users found.</p>
             </div>
             <Table
-                v-if="!loading && users.length > 0"
+                v-if="!loading && users && users.length > 0"
                 :data="users"
-                :searchable-fields="['name', 'email']"
+                :searchable-fields="['name', 'email', 'email_verified_at']"
                 :striped="true"
                 :hoverable="true"
                 :searchable="true"
@@ -212,7 +198,7 @@
                             {{ new Date(user.created_at).toLocaleDateString() }}
                         </TableTd>
                     </tr>
-                    <tr v-if="paginatedData.length === 0">
+                    <tr v-if="!loading && paginatedData.length === 0">
                         <TableTd align="center" class="!py-12 text-gray-500 dark:text-gray-400" colspan="6">
                             No results found. Try adjusting your search.
                         </TableTd>
